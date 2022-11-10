@@ -21,7 +21,7 @@ multiple languages.
 The i18n package provides support for looking up messages according to a set of locale preferences.
 
 ```go
-import "github.com/k8scat/go-i18n/v2/i18n"
+import "github.com/bangwork/go-i18n/v2/i18n"
 ```
 
 Create a Bundle to use for the lifetime of your application.
