@@ -43,7 +43,7 @@ func ParseMessageFileBytes(buf []byte, path string, unmarshalFuncs map[string]Un
 		return nil, err
 	}
 
-	if messageFile.Messages, err = recGetMessages(raw, isMessage(raw), true); err != nil {
+	if messageFile.Messages, err = RecGetMessages(raw, IsMessage(raw), true); err != nil {
 		return nil, err
 	}
 
@@ -54,9 +54,9 @@ const nestedSeparator = "."
 
 var errInvalidTranslationFile = errors.New("invalid translation file, expected key-values, got a single value")
 
-// recGetMessages looks for translation messages inside "raw" parameter,
+// RecGetMessages looks for translation messages inside "raw" parameter,
 // scanning nested maps using recursion.
-func recGetMessages(raw interface{}, isMapMessage, isInitialCall bool) ([]*Message, error) {
+func RecGetMessages(raw interface{}, isMapMessage, isInitialCall bool) ([]*Message, error) {
 	var messages []*Message
 	var err error
 
@@ -105,7 +105,7 @@ func recGetMessages(raw interface{}, isMapMessage, isInitialCall bool) ([]*Messa
 		messages = make([]*Message, 0, len(data))
 		for _, data := range data {
 			// recursively scan slice items
-			childMessages, err := recGetMessages(data, isMessage(data), false)
+			childMessages, err := RecGetMessages(data, IsMessage(data), false)
 			if err != nil {
 				return nil, err
 			}
@@ -120,8 +120,8 @@ func recGetMessages(raw interface{}, isMapMessage, isInitialCall bool) ([]*Messa
 }
 
 func addChildMessages(id string, data interface{}, messages []*Message) ([]*Message, error) {
-	isChildMessage := isMessage(data)
-	childMessages, err := recGetMessages(data, isChildMessage, false)
+	isChildMessage := IsMessage(data)
+	childMessages, err := RecGetMessages(data, isChildMessage, false)
 	if err != nil {
 		return nil, err
 	}
