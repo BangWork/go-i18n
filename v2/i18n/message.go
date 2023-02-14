@@ -175,7 +175,7 @@ func stringSubmap(k string, v interface{}, strdata map[string]string) error {
 	}
 }
 
-// isMessage tells whether the given data is a message, or a map containing
+// IsMessage tells whether the given data is a message, or a map containing
 // nested messages.
 // A map is assumed to be a message if it contains any of the "reserved" keys:
 // "id", "description", "hash", "leftdelim", "rightdelim", "zero", "one", "two", "few", "many", "other"
@@ -185,7 +185,7 @@ func stringSubmap(k string, v interface{}, strdata map[string]string) error {
 // - {"message": {"description": "world", "foo": "bar"}} is a message ("foo" key is ignored)
 // - {"notmessage": {"description": {"hello": "world"}}} is not
 // - {"notmessage": {"foo": "bar"}} is not
-func isMessage(v interface{}) bool {
+func IsMessage(v interface{}) bool {
 	reservedKeys := []string{"id", "description", "hash", "leftdelim", "rightdelim", "zero", "one", "two", "few", "many", "other"}
 	switch data := v.(type) {
 	case string:
